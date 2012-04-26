@@ -1,0 +1,75 @@
+Basic Compiler
+by: Seth Bane skb_03@hotmail.com
+
+Based on language given by Dr. Gary Smith CSC_GWS@shsu.edu
+
+main function found in BaneSyntax.java
+
+Parts:
+ -Lexical Analysis
+ -Syntax Analysis
+ -Semantics Checking (not included)
+ -Intermediate code generation (not included)
+
+Lexical Analyser
+ -This is the specification for tokens as well as information about
+  the implementation of the lexical analysis phase
+  
+  -Valid Lexemes:
+    Keywords
+    int void print function while return input decl
+    
+    Identifiers:
+    An identifier starts with an underscore or letter and is followed by
+    zero or more letters, digits, or underscores. Keywords cannot be used
+    as identifiers
+
+    Integer Literals:
+    An integer literal is a sequence of one or more decimal digits. Integer
+    literals cannot start with a leading zero
+
+    Operators:
+    ; = , () {} || && != / * - + <= >= ==
+
+    String literals:
+    A string literal is a sequence of zero or more string characters surrouned
+    by double quotes
+
+    Comments:
+    Like java, C single comments begin the line with a '//'
+
+    This language is case-sensitive
+
+   -Language Grammar Specification
+    Note: This parser is a top-down impelementation. This grammar does not
+    reflect the changes that will need to be made to eliminate left recursion
+
+    Grammar:
+    <program> := <functions>
+    <functions> := <functions><function> | <function>
+    <function> := <identType> function <ident>(<params>)<block>
+    <identType> := int | void
+    <params> := <params>,<ident>| <ident> | null
+    <block> := { <items> }
+    <items> := <items><item> | <item> | null
+    <item> := <decl> | <stmt>
+    <decl> := decl <ident>;
+    <stmt> := <expr>; | <if> | <while> | <print>; (Input not implemented)
+    <if> := if(<expr>)<block>
+    <while> := while(<expr>)<block>
+    <print> := print(<ident>);
+    <expr> := B = <expr> | B
+    B := B || C | C
+    C := C && D | D
+    D := D ==G | D != G | G
+    G := G < E | G > E | G <= E | G >= E | E
+    E := E + T | E - T | T
+    T := T * F | T / F | F
+    F := (<expr>) | ident(<params>) | idlit
+
+    As stated above this is implemented as a top-down parser (or LLR)
+    some extra steps are taken in the code to eliminate the left-recursion
+    also this parser only uses one lookahead
+
+
+
